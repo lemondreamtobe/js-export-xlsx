@@ -1,5 +1,4 @@
-// @ts-ignore
-import XLSX from 'xlsx';
+import XLSX from 'xlsx/dist/xlsx.full.min';
 
 class ExcelOutputMan {
   sheet2blob = (sheet, sheetName = 'sheet1') => {
