@@ -1,6 +1,6 @@
 {
   "name": "js-export-xlsx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "it is easy for web browser exporting xlsx excel",
   "main": "./lib/index.js",
   "directories": {
