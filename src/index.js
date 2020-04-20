@@ -1,23 +1,28 @@
-// @ts-ignore
 import XLSX from 'xlsx';
 
-class ExcelOutputMan {
-  sheet2blob = (sheet, sheetName = 'sheet1') => {
-    const workbook = {
+function ExcelOutputMan() {
+
+}
+
+ExcelOutputMan.prototype = {
+  constructor: ExcelOutputMan,
+  sheet2blob: function(sheet, sheetName) {
+    sheetName = sheetName || 'sheet1';
+    var workbook = {
       SheetNames: [sheetName],
       Sheets: {}
     };
     workbook.Sheets[sheetName] = sheet;
 
     // 生成excel的配置项
-    const wopts = {
+    var wopts = {
       bookType: 'xlsx', // 要生成的文件类型
       bookSST: false, // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
       type: 'binary'
     };
 
-    const wbout = XLSX.write(workbook, wopts);
-    const blob = new Blob([s2ab(wbout)], {
+    var wbout = XLSX.write(workbook, wopts);
+    var blob = new Blob([s2ab(wbout)], {
       type: "application/octet-stream"
     });
 
@@ -29,9 +34,9 @@ class ExcelOutputMan {
       return buf;
     }
     return blob;
-  }
+  },
 
-  openDownloadDialog = (url, saveName) =>  {
+  openDownloadDialog: function(url, saveName) {
     if (typeof url == 'object' && url instanceof Blob) {
       url = URL.createObjectURL(url); // 创建blob地址
     }
@@ -45,13 +50,13 @@ class ExcelOutputMan {
       event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
     }
     aLink.dispatchEvent(event);
-  }
+  },
 
-  outPut = ({
+  outPut: function({
     header = [],
     data = [],
     name = ''
-  }) => {
+  }) {
     // 格式如下:
     // var _data = [
     //   ['姓名', '性别', '年龄', '注册时间'],
@@ -62,9 +67,11 @@ class ExcelOutputMan {
       header,
       ...data
     ];
-    const sheet = XLSX.utils.aoa_to_sheet(_data);
+    debugger;
+    var sheet = XLSX.utils.aoa_to_sheet(_data);
     this.openDownloadDialog(this.sheet2blob(sheet), `${name}.xlsx`);
   }
 }
 
-export default new ExcelOutputMan();
+const EXCEL = new ExcelOutputMan();
+export default EXCEL;
