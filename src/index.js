@@ -67,7 +67,6 @@ ExcelOutputMan.prototype = {
       header,
       ...data
     ];
-    debugger;
     var sheet = XLSX.utils.aoa_to_sheet(_data);
     this.openDownloadDialog(this.sheet2blob(sheet), `${name}.xlsx`);
   }
